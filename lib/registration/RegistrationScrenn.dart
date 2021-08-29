@@ -136,7 +136,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       //save in database
       final userCollectionRef = getUsersCollectionWithConverter();
       final user = MyUser.User(id: userCredential.user!.uid, userName: userName, email: email);
-      userCollectionRef.add(user);
       userCollectionRef.doc(user.id).set(user).then((value) {
         provider.updateUser(user);
         Navigator.of(context).pushReplacementNamed(HomeScreen.routeName);
