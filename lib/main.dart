@@ -2,22 +2,32 @@ import 'package:chat_flutter/registration/RegistrationScrenn.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:chat_flutter/creatingGroup/createGroupPage.dart';
+import 'package:provider/provider.dart';
 
-void main() async {
-  await Firebase.initializeApp();
+import 'AppProvider.dart';
+
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-    return MaterialApp(
-      routes: {
-        RegistrationScreen.routeName :(context)=>RegistrationScreen(),
+    return ChangeNotifierProvider(
+      create: (context) => AppProvider(),
+      builder: (context,widget){
+        return MaterialApp(
+          debugShowCheckedModeBanner: false,
+          routes: {
+            RegistrationScreen.routeName :(context)=>RegistrationScreen(),
+            HomeScreen.routeName:(context)=>HomeScreen(),
+          },
+          initialRoute: RegistrationScreen.routeName,
+        );
       },
-      initialRoute: RegistrationScreen.routeName,
     );
   }
 
@@ -100,9 +110,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: (){
-          Navigator.push(context, MaterialPageRoute(builder: (context) => CreateGroup()));
-        },
+        onPressed: _incrementCounter,
         tooltip: 'Increment',
         child: Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
