@@ -7,7 +7,8 @@ class Room {
   String name;
   Room({required this.id,required this.description, required this.name, required this.category});
 
-  Room.fromJson(Map<String,Object?>json):this(
+  Room.fromJson(Map<String, Object?> json)
+      : this(
     id:json['id']! as String,
       name:json['userName']! as String,
       description:json['description']! as String,

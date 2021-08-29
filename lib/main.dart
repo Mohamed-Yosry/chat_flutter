@@ -5,6 +5,7 @@ import 'package:chat_flutter/creatingGroup/createGroupPage.dart';
 import 'package:provider/provider.dart';
 
 import 'AppProvider.dart';
+import 'HomeScreen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

@@ -1,5 +1,10 @@
+import 'package:chat_flutter/database/DataBaseHelper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+
+
+import 'Room.dart';
 
 class CreateGroup extends StatefulWidget{
   @override
@@ -147,6 +152,11 @@ class CreateGroupState extends State<CreateGroup>{
   }
 
   void addRoom(){
-
+    final docref= getRoomsCollectionWithConverter().doc();
+    Room room=Room(id:docref.id,name: groupName, description: roomDescription,category:dropListValue);
+    docref.set(room).then((value)  {
+      Fluttertoast.showToast(msg: "Room added successfully",toastLength:Toast.LENGTH_LONG);
+      Navigator.pop(context);
+    });
   }
 }

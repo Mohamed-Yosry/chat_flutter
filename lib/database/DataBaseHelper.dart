@@ -1,3 +1,4 @@
+import 'package:chat_flutter/creatingGroup/Room.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../User.dart';
@@ -7,5 +8,13 @@ CollectionReference<User> getUsersCollectionWithConverter(){
     fromFirestore: (snapshot, _) =>
         User.fromJson(snapshot.data()!),
     toFirestore: (user, _) => user.toJson(),
+  );
+}
+
+CollectionReference<Room> getRoomsCollectionWithConverter(){
+  return FirebaseFirestore.instance.collection(Room.COLLECTION_NAME).withConverter<Room>(
+    fromFirestore: (snapshot, _) =>
+        Room.fromJson(snapshot.data()!),
+    toFirestore: (room, _) => room.toJson(),
   );
 }
