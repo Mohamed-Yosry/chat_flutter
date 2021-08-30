@@ -71,6 +71,23 @@ class _HomeScreenState extends State<HomeScreen> {
                     )
                 )
               ],
+              bottom: TabBar(
+                indicatorColor: Colors.white,
+                tabs: [
+                  Tab(
+                    child: Text(
+                      "My Rooms",
+                      style: TextStyle(color: Colors.white, fontSize: 14, fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  Tab(
+                    child: Text(
+                      "Browse",
+                      style: TextStyle(color: Colors.white, fontSize: 14, fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ],
+              ),
             )
             :AppBar(
               elevation: 0,
@@ -90,19 +107,18 @@ class _HomeScreenState extends State<HomeScreen> {
                   icon: Icon(Icons.search),
                 )
               ],
-
               bottom: TabBar(
                 indicatorColor: Colors.white,
                 tabs: [
                   Tab(
                     child: Text(
-                      "Browse",
+                      "My Rooms",
                       style: TextStyle(color: Colors.white, fontSize: 14, fontWeight: FontWeight.bold),
                     ),
                   ),
                   Tab(
                     child: Text(
-                      "My Rooms",
+                      "Browse",
                       style: TextStyle(color: Colors.white, fontSize: 14, fontWeight: FontWeight.bold),
                     ),
                   ),
@@ -119,6 +135,7 @@ class _HomeScreenState extends State<HomeScreen> {
             body:
                 TabBarView(
                   children: [
+                    Container(),
                     Container(
                        child: FutureBuilder<QuerySnapshot<Room>>(
                           future: roomCollection.get(),
@@ -171,7 +188,6 @@ class _HomeScreenState extends State<HomeScreen> {
                           },
                         )
                     ),
-                    Container(),
                   ],
                 ),
 

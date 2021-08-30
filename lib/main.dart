@@ -27,8 +27,8 @@ class MyApp extends StatelessWidget {
             HomeScreen.routeName:(context)=>HomeScreen(),
             CreateGroup.routeName : (context) => CreateGroup(),
           },
-          initialRoute: //RegistrationScreen.routeName,
-          HomeScreen.routeName,
+          initialRoute: RegistrationScreen.routeName,
+          //HomeScreen.routeName,
         );
       },
     );
