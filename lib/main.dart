@@ -1,3 +1,4 @@
+import 'package:chat_flutter/creatingGroup/createGroupPage.dart';
 import 'package:chat_flutter/registration/RegistrationScrenn.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -24,8 +25,10 @@ class MyApp extends StatelessWidget {
           routes: {
             RegistrationScreen.routeName :(context)=>RegistrationScreen(),
             HomeScreen.routeName:(context)=>HomeScreen(),
+            CreateGroup.routeName : (context) => CreateGroup(),
           },
           initialRoute: RegistrationScreen.routeName,
+          //HomeScreen.routeName,
         );
       },
     );

@@ -7,6 +7,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'Room.dart';
 
 class CreateGroup extends StatefulWidget{
+  static const String routeName = "createGroup";
   @override
   State<StatefulWidget> createState() {
     return CreateGroupState();
