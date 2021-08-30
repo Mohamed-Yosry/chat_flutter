@@ -1,20 +1,13 @@
-import 'package:chat_flutter/AppProvider.dart';
 import 'package:chat_flutter/creatingGroup/Room.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class RoomTile extends StatelessWidget {
   Room toDisplayRoom;
-  bool isMyRoom;
-  RoomTile(this.toDisplayRoom, this.isMyRoom);
-
-  late AppProvider provider;
+  RoomTile(this.toDisplayRoom);
 
   @override
   Widget build(BuildContext context) {
-    provider = Provider.of(context);
-    return isMyRoom != amIMember() ?
-    InkWell(
+    return InkWell(
       onTap: (){
         /// go to description and join room page
         /// Navigator.pushNamed(context, JoinRoom.routeName);
@@ -51,19 +44,8 @@ class RoomTile extends StatelessWidget {
           ],
         ),
       ),
-    )
-    : Container(
-      width: 0, height: 0,
     );
   }
 
-  bool amIMember()
-  {
-    for(int i=0;i<toDisplayRoom.members.length;i++)
-      {
-        if(provider.currentUser!.id==toDisplayRoom.members[i].toString())
-          return true;
-      }
-    return false;
-  }
+
 }
