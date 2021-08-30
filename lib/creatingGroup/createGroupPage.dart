@@ -1,13 +1,16 @@
+import 'package:chat_flutter/AppProvider.dart';
 import 'package:chat_flutter/database/DataBaseHelper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:provider/provider.dart';
 
 
 import 'Room.dart';
 
 class CreateGroup extends StatefulWidget{
   static const String routeName = "createGroup";
+
   @override
   State<StatefulWidget> createState() {
     return CreateGroupState();
@@ -20,9 +23,12 @@ class CreateGroupState extends State<CreateGroup>{
    final List<String> dropDownListItem =['movies', 'sports','music'];
 
   late String groupName,roomDescription;
+  late AppProvider provider;
   final _addRoomKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
+    final groupCreated = ModalRoute.of(context)!.settings.arguments as Function;
+    provider = Provider.of(context);
     return Container(
       decoration: BoxDecoration(
         image: DecorationImage(
@@ -136,7 +142,8 @@ class CreateGroupState extends State<CreateGroup>{
 
                         ElevatedButton(onPressed: ()=>{
                           if(_addRoomKey.currentState?.validate()==true){
-                            addRoom()
+                            addRoom(),
+                            groupCreated(),
                           }
                         }, child: Text("Create"))
                     ],
@@ -153,8 +160,10 @@ class CreateGroupState extends State<CreateGroup>{
   }
 
   void addRoom(){
+
     final docref= getRoomsCollectionWithConverter().doc();
-    Room room=Room(id:docref.id,name: groupName, description: roomDescription,category:dropListValue);
+    Room room=Room(id:docref.id,name: groupName, description: roomDescription,category:dropListValue,
+                  members: [provider.currentUser!.id]);
     docref.set(room).then((value)  {
       Fluttertoast.showToast(msg: "Room added successfully",toastLength:Toast.LENGTH_LONG);
       Navigator.pop(context);

@@ -5,7 +5,9 @@ class Room {
   String description;
   String category;
   String name;
-  Room({required this.id,required this.description, required this.name, required this.category});
+  List members;
+  Room({required this.id,required this.description, required this.name, required this.category,
+      required this.members});
 
   Room.fromJson(Map<String, Object?> json)
       : this(
@@ -13,6 +15,7 @@ class Room {
       name:json['userName']! as String,
       description:json['description']! as String,
       category:json['category']! as String,
+      members: json['members']! as List
   );
 
   Map<String,Object> toJson(){
@@ -20,7 +23,8 @@ class Room {
       'id':id,
       'userName':name,
       'description':description,
-      'category':category
+      'category':category,
+      'members': members
     };
   }
 
