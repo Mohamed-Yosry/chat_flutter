@@ -9,7 +9,8 @@ import 'package:provider/provider.dart';
 class RoomsList extends StatelessWidget {
   late CollectionReference<Room> roomCollection;
   bool isBrowseSelected;
-  RoomsList(this.isBrowseSelected)
+  String filterRoom;
+  RoomsList(this.isBrowseSelected, this.filterRoom)
   {
     roomCollection= getRoomsCollectionWithConverter();
   }
@@ -33,7 +34,8 @@ class RoomsList extends StatelessWidget {
             if (snapshot.connectionState == ConnectionState.done) {
               final List<Room> rooms = snapshot.data?.docs.map((e) => e.data()).toList() ??[];
               final List<Room> myRoomList = isBrowseSelected? browseRooms(rooms): myRooms(rooms);
-              return rooms.length == 0 ?
+              final List<Room> filteredRooms = myRoomsWithFilter(myRoomList, filterRoom);
+              return filteredRooms.length == 0 ?
               Center(
                   child: isBrowseSelected? Text("No rooms available", style: TextStyle(fontSize: 14, color: Colors.black.withOpacity(0.3))):
                       Text("No rooms joined yet" , style: TextStyle(fontSize: 14, color: Colors.black.withOpacity(0.3)))
@@ -46,8 +48,8 @@ class RoomsList extends StatelessWidget {
                   childAspectRatio: 0.88,
                 ),
                 itemBuilder: (buildContext, index){
-                    return RoomTile(myRoomList[index]);
-                },itemCount: myRoomList.length,
+                    return RoomTile(filteredRooms[index]);
+                },itemCount: filteredRooms.length,
 
               );
             }
@@ -69,7 +71,7 @@ class RoomsList extends StatelessWidget {
   }
 
   List<Room> browseRooms(List<Room> allReturnedRooms){
-    List<Room> browseRoomsList=[];
+    final List<Room> browseRoomsList=[];
     for(int i=0;i<allReturnedRooms.length;i++)
     {
       if(!amIMember(allReturnedRooms[i]))
@@ -78,13 +80,28 @@ class RoomsList extends StatelessWidget {
     return browseRoomsList;
   }
   List<Room> myRooms(List<Room> allReturnedRooms){
-    List<Room> myRoomsList=[];
+    final List<Room> myRoomsList=[];
     for(int i=0;i<allReturnedRooms.length;i++)
     {
-      if(amIMember(allReturnedRooms[i]))
+      if(amIMember(allReturnedRooms[i]) )
         myRoomsList.add(allReturnedRooms[i]);
     }
     return myRoomsList;
   }
+
+  List<Room> myRoomsWithFilter(List<Room> toGetFiltered,String filterText)
+  {
+    filterText.toLowerCase();
+    final List<Room> filteredRooms = toGetFiltered.where((room){
+      final name = room.name.toLowerCase();
+      final description = room.description.toLowerCase();
+      final category = room.category.toLowerCase();
+      return name.contains(filterText) || description.contains(filterText) ||
+          category.contains(filterText);
+    }).toList();
+
+    return filteredRooms;
+  }
 }
+
 

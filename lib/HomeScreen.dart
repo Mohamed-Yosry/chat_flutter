@@ -12,6 +12,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   bool _isSeacrhIconPressed = false;
+  String searchValue='';
 
   @override
   Widget build(BuildContext context) {
@@ -47,6 +48,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               borderRadius: BorderRadius.circular(35),
                             ),
                             child: TextField(
+                              onChanged: searchTextChanged,
                               decoration: InputDecoration(
                                 hintText: "Search Room Name",
                                 hintStyle: TextStyle(color: Color(0x593598DB), fontSize: 14),
@@ -136,8 +138,8 @@ class _HomeScreenState extends State<HomeScreen> {
             body:
                 TabBarView(
                   children: [
-                    RoomsList(false),
-                    RoomsList(true)
+                    RoomsList(false, searchValue),
+                    RoomsList(true, searchValue)
                   ],
                 ),
             ),
@@ -149,6 +151,13 @@ class _HomeScreenState extends State<HomeScreen> {
   {
     setState(() {
 
+    });
+  }
+
+  void searchTextChanged(String text)
+  {
+    setState(() {
+      searchValue = text;
     });
   }
 }
