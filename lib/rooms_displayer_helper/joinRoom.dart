@@ -3,11 +3,34 @@ import 'package:flutter/material.dart';
 import 'chatBody.dart';
 import 'joinRoomBody.dart';
 
-class JoinRoom extends StatelessWidget {
+class JoinRoom extends StatefulWidget {
   static const String routeName = 'joinRoom';
+
+  @override
+  _JoinRoomState createState() => _JoinRoomState();
+}
+
+class _JoinRoomState extends State<JoinRoom> {
+  //int curruntIndex=0;
+
+
+
+
   @override
   Widget build(BuildContext context) {
     final List roomArgs = ModalRoute.of(context)!.settings.arguments as List;
+
+    changingBodyOfJoinRoom() {
+      setState(() {
+        roomArgs[1]=false;
+        //curruntIndex=1;
+        //print("aaaaaaaaaaaaaaklklllllllllllll");
+      });
+    }
+    //List joinRoomState=[JoinRoomBody(roomArgs, changingBodyOfJoinRoom),ChatBody(roomArgs)];
+
+
+
     return Container(
       decoration: BoxDecoration(
           image: DecorationImage(
@@ -41,7 +64,7 @@ class JoinRoom extends StatelessWidget {
             margin: EdgeInsets.symmetric(vertical: 40, horizontal: 15),
             padding: EdgeInsets.only(top: 20, bottom: 20),
             child: roomArgs[1]
-                ? JoinRoomBody(roomArgs)
+                ? JoinRoomBody(roomArgs,changingBodyOfJoinRoom)
                 : ChatBody(roomArgs)
           ),
         ),

@@ -1,10 +1,19 @@
+import 'package:chat_flutter/database/DataBaseHelper.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../AppProvider.dart';
 
 class JoinRoomBody extends StatelessWidget {
   late List roomArgs;
-  JoinRoomBody(this.roomArgs);
+  final VoidCallback changingBodyOfJoinRoom;
+  JoinRoomBody(this.roomArgs,this.changingBodyOfJoinRoom);
+
+  late AppProvider provider;
+
   @override
   Widget build(BuildContext context) {
+    provider = Provider.of(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       // mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -49,7 +58,14 @@ class JoinRoomBody extends StatelessWidget {
                   borderRadius: BorderRadius.circular(7.0),
                 )
             )),
-            onPressed: (){
+            onPressed: ()async{
+              print("${roomArgs[0].members[0]}");
+              roomArgs[0].members.add(provider.currentUser!.id);
+              final docref= getRoomsCollectionWithConverter().doc(roomArgs[0].id);
+              await docref.update({'members': roomArgs[0].members});
+
+              changingBodyOfJoinRoom();
+
 
             },
             child: Text(

@@ -7,6 +7,6 @@ class ChatBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column();//widget
+    return Column(children: [Text("heelo")],);//widget
   }
 }
