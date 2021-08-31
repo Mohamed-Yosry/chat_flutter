@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import 'chatBody.dart';
+import 'joinRoomBody.dart';
+
 class JoinRoom extends StatelessWidget {
   static const String routeName = 'joinRoom';
   @override
@@ -38,61 +41,8 @@ class JoinRoom extends StatelessWidget {
             margin: EdgeInsets.symmetric(vertical: 40, horizontal: 15),
             padding: EdgeInsets.only(top: 20, bottom: 20),
             child: roomArgs[1]
-                ? Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                   // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "Hello, Welcome to our chat room",
-                        style: TextStyle(fontSize: 14,),
-                        textAlign: TextAlign.center,
-                      ),
-                      Text(
-                        "Join ${roomArgs[0].name}!",
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 20),
-                        textAlign: TextAlign.center,
-
-                      ),
-                      SizedBox(height: 26,),
-                      Image(
-                        image: AssetImage(
-                            'assets/categories/${roomArgs[0].category}.png'),
-                        //height: 100,
-                        fit: BoxFit.fitHeight,
-                      ),
-                      SizedBox(height: 31,),
-                      Text(
-                          roomArgs[0].description,
-                          style: TextStyle(
-                              color: Color(0xFF7F7F7F), fontSize: 20),
-                          textAlign: TextAlign.center,
-                      ),
-                      SizedBox(height: 35),
-                      Center(
-                       child: ElevatedButton(
-                           style: ButtonStyle(shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                               RoundedRectangleBorder(
-                                 borderRadius: BorderRadius.circular(7.0),
-                               )
-                           )),
-                          onPressed: (){
-
-                          },
-                         child: Text(
-                             "Join",
-                            textAlign: TextAlign.center,
-                           style: TextStyle(color: Colors.white),
-                         ),
-                       ),
-                      ),
-                    ],
-                  )
-                : Column(
-                    children: [
-                      Text("data"),
-                    ],
-                  ),
+                ? JoinRoomBody(roomArgs)
+                : ChatBody(roomArgs)
           ),
         ),
       ),
