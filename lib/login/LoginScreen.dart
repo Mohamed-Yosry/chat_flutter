@@ -1,6 +1,7 @@
 import 'package:chat_flutter/database/DataBaseHelper.dart';
-import 'package:chat_flutter/login/LoginScreen.dart';
+import 'package:chat_flutter/registration/RegistrationScrenn.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:provider/provider.dart';
@@ -9,22 +10,17 @@ import 'package:chat_flutter/User.dart' as MyUser;
 import '../AppProvider.dart';
 import '../HomeScreen.dart';
 
-class RegistrationScreen extends StatefulWidget {
-  static const String routeName = 'register';
+class LoginScreen extends StatefulWidget {
+  static const String routeName = 'login';
 
   @override
-  _RegistrationScreenState createState() => _RegistrationScreenState();
+  _LoginScreenState createState() => _LoginScreenState();
 }
 
-class _RegistrationScreenState extends State<RegistrationScreen> {
-  final _registerFormKey = GlobalKey<FormState>();
-
-  String userName = '';
-
+class _LoginScreenState extends State<LoginScreen> {
+  final _loginFormKey = GlobalKey<FormState>();
   String email = '';
-
   String password = '';
-
   bool isPasswordHidden = true;
 
   late AppProvider provider;
@@ -45,52 +41,41 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         Scaffold(
           backgroundColor: Colors.transparent,
           appBar: AppBar(
-            title: Center(child: Text('Create Account')),
+            title: Center(
+                child: Text(
+              'Login',
+              textAlign: TextAlign.center,
+            )),
             backgroundColor: Colors.transparent,
             elevation: 0,
           ),
           body: Container(
-            padding: EdgeInsets.fromLTRB(15, 200, 15, 12),
+            padding: EdgeInsets.fromLTRB(15, 170, 15, 12),
             child: SingleChildScrollView(
                 child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
-              mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                Container(
+                    padding: EdgeInsets.only(bottom: 20),
+                    child: Text(
+                      "Welcome back!",
+                      style: TextStyle(fontSize: 28),
+                    )),
                 Form(
-                  key: _registerFormKey,
+                  key: _loginFormKey,
                   child: Column(
                     children: [
-                      TextFormField(
-                        onChanged: (newValue) {
-                          userName = newValue;
-                        },
-                        decoration: InputDecoration(
-                          labelText: 'User name',
-                          floatingLabelBehavior: FloatingLabelBehavior.auto,
-                          labelStyle: TextStyle(
-                            color: Color.fromRGBO(121, 121, 121, 1),
-                            fontSize: 12,
-                          ),
-                        ),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter user name';
-                          }
-                          return null;
-                        },
-                      ),
                       TextFormField(
                         onChanged: (newValue) {
                           email = newValue;
                         },
                         decoration: InputDecoration(
-                          labelText: 'E-mail',
-                          floatingLabelBehavior: FloatingLabelBehavior.auto,
-                          labelStyle: TextStyle(
-                            color: Color.fromRGBO(121, 121, 121, 1),
-                            fontSize: 12,
-                          ),
-                        ),
+                            labelText: 'E-mail',
+                            floatingLabelBehavior: FloatingLabelBehavior.auto,
+                            labelStyle: TextStyle(
+                              color: Color.fromRGBO(121, 121, 121, 1),
+                              fontSize: 12,
+                            )),
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return 'Please enter your email';
@@ -133,35 +118,39 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   ),
                 ),
                 Container(
-                  padding: EdgeInsets.fromLTRB(0, 100, 0, 20),
-                  child: isLoading
-                      ? Center(child: CircularProgressIndicator())
-                      : ElevatedButton(
-                          onPressed: () {
-                            onPressed:
-                            () => createAccount();
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.fromLTRB(15, 12, 15, 12),
-                            child: isLoading
-                                ? Center(child: CircularProgressIndicator())
-                                : Row(children: [
-                                    Expanded(
-                                        child: Text("create account",
-                                            style: TextStyle(fontSize: 18))),
-                                    Icon(
-                                      Icons.arrow_forward,
-                                    ),
-                                  ]),
-                          )),
+                  padding: EdgeInsets.fromLTRB(0, 130, 0, 20),
+                  child: ElevatedButton(
+                      onPressed: () {
+                        if (_loginFormKey.currentState?.validate() == true) {
+                          loginUser();
+                        }
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(15, 12, 15, 12),
+                        child: isLoading
+                            ? Center(child: CircularProgressIndicator())
+                            : Row(children: [
+                                Expanded(
+                                    child: Text(
+                                  "Login",
+                                  style: TextStyle(fontSize: 18),
+                                )),
+                                Icon(
+                                  Icons.arrow_forward,
+                                ),
+                              ]),
+                      )),
                 ),
                 Container(
                   child: TextButton(
                       onPressed: () {
-                        Navigator.pushReplacementNamed(
-                            context, LoginScreen.routeName);
+                        Navigator.pushNamed(
+                            context, RegistrationScreen.routeName);
                       },
-                      child: Text("Already have Account!")),
+                      child: Text(
+                        "or Create My Account",
+                        style: TextStyle(fontSize: 15),
+                      )),
                 ),
               ],
             )),
@@ -171,42 +160,34 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     );
   }
 
-  final db = FirebaseFirestore.instance;
   bool isLoading = false;
-  void createAccount() {
-    if (_registerFormKey.currentState?.validate() == true) {
-      registerUser();
+  void login() {
+    if (_loginFormKey.currentState?.validate() == true) {
+      loginUser();
     }
   }
 
-  final auth = FirebaseAuth.instance;
-  void registerUser() async {
+  void loginUser() async {
     setState(() {
       isLoading = true;
     });
     try {
-      UserCredential userCredential = await auth.createUserWithEmailAndPassword(
-        //UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
-      //save in database
-      final userCollectionRef = getUsersCollectionWithConverter();
-      final user = MyUser.User(
-          id: userCredential.user!.uid, userName: userName, email: email);
-      userCollectionRef.doc(user.id).set(user).then((value) {
-        provider.updateUser(user);
-        Navigator.of(context).pushReplacementNamed(HomeScreen.routeName);
-      });
-
-      showErrorMessage("user registered succesful");
+      UserCredential userCredential = await FirebaseAuth.instance
+          .signInWithEmailAndPassword(email: email, password: password);
+      if (userCredential.user == null) {
+        showErrorMessage("invalid creditional no user exist with this email");
+      } else {
+        final db = FirebaseFirestore.instance;
+        final userRef = getUsersCollectionWithConverter()
+            .doc(userCredential.user!.uid)
+            .get()
+            .then((retrievedUser) {
+          provider.updateUser(retrievedUser.data());
+          Navigator.pushReplacementNamed(context, HomeScreen.routeName);
+        });
+      }
     } on FirebaseAuthException catch (e) {
       showErrorMessage(e.message ?? "somthing went wrong");
-      /*if (e.code == 'weak-password') {
-        print('The password provided is too weak.');
-      } else if (e.code == 'email-already-in-use') {
-        print('The account already exists for that email.');
-      }*/
     } catch (e) {
       print(e);
     }
