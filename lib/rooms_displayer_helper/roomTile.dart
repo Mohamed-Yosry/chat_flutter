@@ -11,16 +11,7 @@ class RoomTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: (){
-        if(navigateToBrowse)
-          {
-            Navigator.pushNamed(context, JoinRoom.routeName, arguments: toDisplayRoom);
-          }
-        else
-          {
-
-          }
-        /// go to description and join room page
-        /// Navigator.pushNamed(context, JoinRoom.routeName);
+        Navigator.pushNamed(context, JoinRoom.routeName, arguments: [toDisplayRoom,navigateToBrowse]);
       },
       child: Container(
         padding: EdgeInsets.symmetric(vertical: 10,),
