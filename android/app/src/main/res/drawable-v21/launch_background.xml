@@ -4,9 +4,21 @@
     <item android:drawable="?android:colorBackground" />
 
     <!-- You can insert your own image assets here -->
-    <!-- <item>
+    <item>
+
+         <bitmap
+             android:gravity="bottom"
+             android:src="@mipmap/by" />
+
+    </item>
+
+
+    <item>
+
         <bitmap
             android:gravity="center"
-            android:src="@mipmap/launch_image" />
-    </item> -->
+            android:src="@mipmap/logo" />
+
+
+    </item>
 </layer-list>
