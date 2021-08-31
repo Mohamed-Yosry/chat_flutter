@@ -3,6 +3,8 @@ import 'package:chat_flutter/rooms_displayer_helper/Rooms%20list.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import 'SideMenu.dart';
+
 class HomeScreen extends StatefulWidget {
   static const String routeName = 'homeScreen';
 
@@ -134,7 +136,7 @@ class _HomeScreenState extends State<HomeScreen> {
               },
               child: Icon(Icons.add),
             ),
-            drawer: Drawer(),
+            drawer: Drawer(child: SideMenu(),),
             body:
                 TabBarView(
                   children: [
