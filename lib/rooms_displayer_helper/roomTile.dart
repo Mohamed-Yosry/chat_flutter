@@ -1,14 +1,24 @@
 import 'package:chat_flutter/creatingGroup/Room.dart';
+import 'package:chat_flutter/rooms_displayer_helper/joinRoom.dart';
 import 'package:flutter/material.dart';
 
 class RoomTile extends StatelessWidget {
   Room toDisplayRoom;
-  RoomTile(this.toDisplayRoom);
+  bool navigateToBrowse;
+  RoomTile(this.toDisplayRoom,this.navigateToBrowse);
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: (){
+        if(navigateToBrowse)
+          {
+            Navigator.pushNamed(context, JoinRoom.routeName, arguments: toDisplayRoom);
+          }
+        else
+          {
+
+          }
         /// go to description and join room page
         /// Navigator.pushNamed(context, JoinRoom.routeName);
       },

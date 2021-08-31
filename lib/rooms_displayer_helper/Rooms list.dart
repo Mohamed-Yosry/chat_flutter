@@ -48,7 +48,7 @@ class RoomsList extends StatelessWidget {
                   childAspectRatio: 0.88,
                 ),
                 itemBuilder: (buildContext, index){
-                    return RoomTile(filteredRooms[index]);
+                    return RoomTile(filteredRooms[index], isBrowseSelected);
                 },itemCount: filteredRooms.length,
 
               );
