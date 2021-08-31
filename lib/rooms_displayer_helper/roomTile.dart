@@ -28,10 +28,12 @@ class RoomTile extends StatelessWidget {
         ),
         child: Column(
           children: [
-            Image(
-              image: AssetImage('assets/categories/${toDisplayRoom.category}.png'),
-              height: 120,
-              fit: BoxFit.fitHeight,
+            Expanded(
+              child: Image(
+                image: AssetImage('assets/categories/${toDisplayRoom.category}.png'),
+                //height: 100,
+                fit: BoxFit.fitHeight,
+              ),
             ),
             SizedBox(height: 9),
             Text(toDisplayRoom.name),
