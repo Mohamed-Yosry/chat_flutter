@@ -5,13 +5,15 @@ import 'package:flutter/material.dart';
 class RoomTile extends StatelessWidget {
   Room toDisplayRoom;
   bool navigateToBrowse;
-  RoomTile(this.toDisplayRoom,this.navigateToBrowse);
+  final VoidCallback updateBrowse_myRoom;
+  RoomTile(this.toDisplayRoom,this.navigateToBrowse, this.updateBrowse_myRoom);
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: (){
-        Navigator.pushNamed(context, JoinRoom.routeName, arguments: [toDisplayRoom,navigateToBrowse]);
+        Navigator.pushNamed(context, JoinRoom.routeName, arguments: [toDisplayRoom, navigateToBrowse,
+          updateBrowse_myRoom]);
       },
       child: Container(
         padding: EdgeInsets.symmetric(vertical: 10,),

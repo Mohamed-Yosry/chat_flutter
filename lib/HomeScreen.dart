@@ -138,8 +138,8 @@ class _HomeScreenState extends State<HomeScreen> {
             body:
                 TabBarView(
                   children: [
-                    RoomsList(false, searchValue),
-                    RoomsList(true, searchValue)
+                    RoomsList(false, searchValue, isGroupCreated),
+                    RoomsList(true, searchValue, isGroupCreated)
                   ],
                 ),
             ),

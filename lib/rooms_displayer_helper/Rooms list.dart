@@ -10,7 +10,8 @@ class RoomsList extends StatelessWidget {
   late CollectionReference<Room> roomCollection;
   bool isBrowseSelected;
   String filterRoom;
-  RoomsList(this.isBrowseSelected, this.filterRoom)
+  final VoidCallback updateBrowse_myRoom;
+  RoomsList(this.isBrowseSelected, this.filterRoom, this.updateBrowse_myRoom)
   {
     roomCollection= getRoomsCollectionWithConverter();
   }
@@ -48,7 +49,7 @@ class RoomsList extends StatelessWidget {
                   childAspectRatio: 0.88,
                 ),
                 itemBuilder: (buildContext, index){
-                    return RoomTile(filteredRooms[index], isBrowseSelected);
+                    return RoomTile(filteredRooms[index], isBrowseSelected, updateBrowse_myRoom);
                 },itemCount: filteredRooms.length,
 
               );

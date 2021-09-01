@@ -13,14 +13,12 @@ class JoinRoom extends StatefulWidget {
 class _JoinRoomState extends State<JoinRoom> {
   //int curruntIndex=0;
 
-
-
-
   @override
   Widget build(BuildContext context) {
     final List roomArgs = ModalRoute.of(context)!.settings.arguments as List;
 
     changingBodyOfJoinRoom() {
+      roomArgs[2]();
       setState(() {
         roomArgs[1]=false;
         //curruntIndex=1;
