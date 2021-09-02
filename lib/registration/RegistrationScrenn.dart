@@ -138,8 +138,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                       ? Center(child: CircularProgressIndicator())
                       : ElevatedButton(
                           onPressed: () {
-                            onPressed:
-                            () => createAccount();
+                            createAccount();
                           },
                           child: Padding(
                             padding: const EdgeInsets.fromLTRB(15, 12, 15, 12),
@@ -153,7 +152,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                       Icons.arrow_forward,
                                     ),
                                   ]),
-                          )),
+                          )
+                  ),
                 ),
                 Container(
                   child: TextButton(

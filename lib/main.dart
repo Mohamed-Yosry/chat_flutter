@@ -24,6 +24,7 @@ class MyApp extends StatelessWidget {
       builder: (context,widget) {
         final provider = Provider.of<AppProvider>(context);
         final isloggedInUser = provider.checkUser();
+
         return MaterialApp(
           debugShowCheckedModeBanner: false,
           routes: {
