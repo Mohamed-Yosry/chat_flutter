@@ -3,7 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../User.dart';
 
-CollectionReference updateCollection = FirebaseFirestore.instance.collection(Room.COLLECTION_NAME);
+//CollectionReference updateCollection = FirebaseFirestore.instance.collection(Room.COLLECTION_NAME);
 
 
 CollectionReference<User> getUsersCollectionWithConverter(){
@@ -21,5 +21,3 @@ CollectionReference<Room> getRoomsCollectionWithConverter(){
     toFirestore: (room, _) => room.toJson(),
   );
 }
-
-

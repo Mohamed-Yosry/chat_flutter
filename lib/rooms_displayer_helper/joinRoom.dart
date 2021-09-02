@@ -1,5 +1,8 @@
+import 'package:chat_flutter/database/DataBaseHelper.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../AppProvider.dart';
 import 'chatBody.dart';
 import 'joinRoomBody.dart';
 
@@ -13,8 +16,11 @@ class JoinRoom extends StatefulWidget {
 class _JoinRoomState extends State<JoinRoom> {
   //int curruntIndex=0;
 
+  late AppProvider provider;
+
   @override
   Widget build(BuildContext context) {
+    provider = Provider.of(context);
     final List roomArgs = ModalRoute.of(context)!.settings.arguments as List;
 
     changingBodyOfJoinRoom() {
@@ -44,10 +50,26 @@ class _JoinRoomState extends State<JoinRoom> {
           centerTitle: true,
           title: Text(roomArgs[0].name),
           actions: [
-            IconButton(
-              onPressed: () {},
-              icon: Icon(Icons.more_vert),
-            )
+
+              PopupMenuButton(
+                itemBuilder:(context)=> [
+                  PopupMenuItem(
+                    child: Text("Leave Room"),
+                    value: "w",
+                  )
+                ],
+                child: Icon(Icons.more_vert),
+                onSelected: (value) {
+                  setState(() {
+                    roomArgs[0].members.remove(provider.currentUser!.id);
+                    final docref= getRoomsCollectionWithConverter().doc(roomArgs[0].id);
+                    docref.update({'members': roomArgs[0].members});
+                    roomArgs[2]();
+                    Navigator.pop(context);
+                  });
+                },
+              )
+
           ],
         ),
         body: Center(
