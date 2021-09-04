@@ -57,11 +57,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                 prefixIcon: IconButton(
                                   onPressed: (){
                                     setState(() {
+                                      searchValue='';
                                       _isSeacrhIconPressed=false;
                                     });
                                   },
                                   color: Color(0xFF3598DB),
-                                  icon: Icon(Icons.search),
+                                  icon: Icon(Icons.close),
                                 ),
                                 border: InputBorder.none,
                               ),
