@@ -1,3 +1,4 @@
+import 'package:chat_flutter/AlertDialog.dart';
 import 'package:chat_flutter/database/DataBaseHelper.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -31,7 +32,16 @@ class _JoinRoomState extends State<JoinRoom> {
         //print("aaaaaaaaaaaaaaklklllllllllllll");
       });
     }
-    //List joinRoomState=[JoinRoomBody(roomArgs, changingBodyOfJoinRoom),ChatBody(roomArgs)];
+
+    yesOnpressed(){
+      setState(() {
+        roomArgs[0].members.remove(provider.currentUser!.id);
+        final docref= getRoomsCollectionWithConverter().doc(roomArgs[0].id);
+        docref.update({'members': roomArgs[0].members});
+        roomArgs[2]();
+        Navigator.pop(context);
+      });
+    }
 
 
 
@@ -59,6 +69,7 @@ class _JoinRoomState extends State<JoinRoom> {
                   )
                 ],
                 child: Icon(Icons.more_vert),
+
                 onSelected: (value) {
                   setState(() {
                     roomArgs[0].members.remove(provider.currentUser!.id);
@@ -67,7 +78,15 @@ class _JoinRoomState extends State<JoinRoom> {
                     roomArgs[2]();
                     Navigator.pop(context);
                   });
-                },
+
+                      //AppAlertDialog(Model("Do You Want To Leave This Room?","Leaving Room",yesOnpressed,yesOnpressed));
+                }
+                /*onSelected: (value) {
+                  setState(() {
+                    AppAlertDialog(Model("Do You Want To Leave This Room?","Leaving Room",yesOnpressed,yesOnpressed));
+
+                  });
+                },*/
               )
 
           ],

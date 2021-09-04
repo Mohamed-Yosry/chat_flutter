@@ -56,7 +56,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                 hintStyle: TextStyle(color: Color(0x593598DB), fontSize: 14),
                                 prefixIcon: IconButton(
                                   onPressed: (){
-
+                                    setState(() {
+                                      _isSeacrhIconPressed=false;
+                                    });
                                   },
                                   color: Color(0xFF3598DB),
                                   icon: Icon(Icons.search),
