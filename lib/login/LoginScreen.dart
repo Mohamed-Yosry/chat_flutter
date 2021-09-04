@@ -5,7 +5,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:provider/provider.dart';
-import 'package:chat_flutter/User.dart' as MyUser;
 
 import '../AppProvider.dart';
 import '../HomeScreen.dart';
