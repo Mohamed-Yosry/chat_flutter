@@ -19,6 +19,7 @@ CollectionReference<Room> getRoomsCollectionWithConverter(){
     toFirestore: (room, _) => room.toJson(),
   );
 }
+
 CollectionReference<Message> getMessageCollectionWithConverter(String roomId){
   final roomCollection =getRoomsCollectionWithConverter();
 
