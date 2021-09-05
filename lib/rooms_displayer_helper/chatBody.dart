@@ -41,11 +41,11 @@ class _ChatBodyState extends State<ChatBody> {
 
     provider= Provider.of<AppProvider>(context);
 
-    return Container(
 
+
+    return Container(
       padding: EdgeInsets.all(8),
      child: Column(
-
       children: [
         Expanded(child:
 
@@ -58,31 +58,47 @@ class _ChatBodyState extends State<ChatBody> {
 
           }
           else if(snapShot.hasData){
+
             return ListView.builder(itemBuilder: (buildContext,index){
               return ListTile(
-                title:Align(
-                    alignment: (snapShot.data!.docs[index].data().senderId== provider.currentUser!.id?Alignment.topRight:Alignment.topLeft),
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: snapShot.data!.docs[index].data().senderId== provider.currentUser!.id?Color.fromRGBO(53, 152, 219,1):Color.fromRGBO(248, 248, 248,1),
-                    borderRadius: BorderRadius.only(
-                      topRight: Radius.circular(40),
-                      bottomLeft:snapShot.data!.docs[index].data().senderId== provider.currentUser!.id?Radius.circular(40):Radius.circular(0),
-                      topLeft: Radius.circular(40),
-                      bottomRight:snapShot.data!.docs[index].data().senderId== provider.currentUser!.id?Radius.circular(0):Radius.circular(40),
+                title:Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                        Container(
 
-                    ),
-                  ),
+                          child: Text(
 
+                              snapShot.data!.docs[index].data().senderId== provider.currentUser!.id? "":snapShot.data!.docs[index].data().senderName,
+                              style: TextStyle(fontSize: 12)
 
-                  padding:EdgeInsets.all(15) ,
-                    child: Text(snapShot.data?.docs[index]
-                    .data().content??" "),
-                  ),
+                          ),
+                        ),
+                    Align(
+                      alignment: (snapShot.data!.docs[index].data().senderId== provider.currentUser!.id?Alignment.topRight:Alignment.topLeft),
+
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: snapShot.data!.docs[index].data().senderId== provider.currentUser!.id?Color.fromRGBO(53, 152, 219,1):Color.fromRGBO(248, 248, 248,1),
+                          borderRadius: BorderRadius.only(
+                            topRight: Radius.circular(40),
+                            bottomLeft:snapShot.data!.docs[index].data().senderId== provider.currentUser!.id?Radius.circular(40):Radius.circular(0),
+                            topLeft: Radius.circular(40),
+                            bottomRight:snapShot.data!.docs[index].data().senderId== provider.currentUser!.id?Radius.circular(0):Radius.circular(40),
+
+                          ),
+                        ),
+                        padding:EdgeInsets.all(15) ,
+                          child: Text(snapShot.data?.docs[index]
+                          .data().content??" "),
+                        ),
+                      ),
+                    ],
                 ),
+
               );
+
               },
-               itemCount: snapShot.data?.size??0,
+              itemCount: snapShot.data?.size??0,
              );
           }
 
@@ -146,7 +162,7 @@ class _ChatBodyState extends State<ChatBody> {
     final newMessageObj =messageRef.doc();
     final message= Message(id: newMessageObj.id,
         content: typeMessge,
-        time: DateTime.now().microsecondsSinceEpoch,
+        time: DateTime.now().toLocal().millisecondsSinceEpoch ,
         senderName: provider.currentUser?.userName??" ",
         senderId:   provider.currentUser?.id??"",
 
