@@ -63,8 +63,19 @@ class _ChatBodyState extends State<ChatBody> {
                 title:Align(
                     alignment: (snapShot.data!.docs[index].data().senderId== provider.currentUser!.id?Alignment.topRight:Alignment.topLeft),
                 child: Container(
-                   padding:EdgeInsets.all(15) ,
+                  decoration: BoxDecoration(
                     color: snapShot.data!.docs[index].data().senderId== provider.currentUser!.id?Color.fromRGBO(53, 152, 219,1):Color.fromRGBO(248, 248, 248,1),
+                    borderRadius: BorderRadius.only(
+                      topRight: Radius.circular(40),
+                      bottomLeft:snapShot.data!.docs[index].data().senderId== provider.currentUser!.id?Radius.circular(40):Radius.circular(0),
+                      topLeft: Radius.circular(40),
+                      bottomRight:snapShot.data!.docs[index].data().senderId== provider.currentUser!.id?Radius.circular(0):Radius.circular(40),
+
+                    ),
+                  ),
+
+
+                  padding:EdgeInsets.all(15) ,
                     child: Text(snapShot.data?.docs[index]
                     .data().content??" "),
                   ),
