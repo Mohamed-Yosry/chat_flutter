@@ -20,7 +20,7 @@ class AppProvider extends ChangeNotifier{
               currentUser = retUser.data();
             }
       });
-      notifyListeners();
+      notifyListeners(); ///throw error
     }
     return firebaseuser != null;
   }

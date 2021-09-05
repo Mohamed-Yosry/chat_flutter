@@ -4,6 +4,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../User.dart';
 
+//CollectionReference updateCollection = FirebaseFirestore.instance.collection(Room.COLLECTION_NAME);
+
+
 CollectionReference<User> getUsersCollectionWithConverter(){
   return FirebaseFirestore.instance.collection(User.CollectionName).withConverter<User>(
     fromFirestore: (snapshot, _) =>

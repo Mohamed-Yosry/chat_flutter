@@ -1,13 +1,40 @@
+import 'package:chat_flutter/database/DataBaseHelper.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../AppProvider.dart';
 import 'chatBody.dart';
 import 'joinRoomBody.dart';
 
-class JoinRoom extends StatelessWidget {
+class JoinRoom extends StatefulWidget {
   static const String routeName = 'joinRoom';
+
+  @override
+  _JoinRoomState createState() => _JoinRoomState();
+}
+
+class _JoinRoomState extends State<JoinRoom> {
+  //int curruntIndex=0;
+
+  late AppProvider provider;
+
   @override
   Widget build(BuildContext context) {
+    provider = Provider.of(context);
     final List roomArgs = ModalRoute.of(context)!.settings.arguments as List;
+
+    changingBodyOfJoinRoom() {
+      roomArgs[2]();
+      setState(() {
+        roomArgs[1]=false;
+        //curruntIndex=1;
+        //print("aaaaaaaaaaaaaaklklllllllllllll");
+      });
+    }
+    //List joinRoomState=[JoinRoomBody(roomArgs, changingBodyOfJoinRoom),ChatBody(roomArgs)];
+
+
+
     return Container(
       decoration: BoxDecoration(
           image: DecorationImage(
@@ -23,10 +50,26 @@ class JoinRoom extends StatelessWidget {
           centerTitle: true,
           title: Text(roomArgs[0].name),
           actions: [
-            IconButton(
-              onPressed: () {},
-              icon: Icon(Icons.more_vert),
-            )
+
+              PopupMenuButton(
+                itemBuilder:(context)=> [
+                  PopupMenuItem(
+                    child: Text("Leave Room"),
+                    value: "w",
+                  )
+                ],
+                child: Icon(Icons.more_vert),
+                onSelected: (value) {
+                  setState(() {
+                    roomArgs[0].members.remove(provider.currentUser!.id);
+                    final docref= getRoomsCollectionWithConverter().doc(roomArgs[0].id);
+                    docref.update({'members': roomArgs[0].members});
+                    roomArgs[2]();
+                    Navigator.pop(context);
+                  });
+                },
+              )
+
           ],
         ),
         body: Center(
@@ -41,7 +84,7 @@ class JoinRoom extends StatelessWidget {
             margin: EdgeInsets.symmetric(vertical: 40, horizontal: 15),
             padding: EdgeInsets.only(top: 20, bottom: 20),
             child: roomArgs[1]
-                ? JoinRoomBody(roomArgs)
+                ? JoinRoomBody(roomArgs,changingBodyOfJoinRoom)
                 : ChatBody(roomArgs)
           ),
         ),
